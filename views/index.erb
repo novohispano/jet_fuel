@@ -1,0 +1,33 @@
+<div id="wrap">
+  <div class="container">
+    <div class="row" style="padding: 40px 40px 40px 135px;">
+      <div>
+        <div>
+          <h1 style="padding-bottom: 10px;">Let's shorten your URL.</h1>
+        </div>
+        <div>
+          <p class="lead">
+            Welcome to Jet Fuel, <br />the link shortener tool developed at gSchool.
+          </p>
+        </div>
+        <div>
+          <p>Enter your URL.</p>
+        </div>
+        <div>
+          <form action='/' method='post'>
+            <fieldset>
+              <div>
+                <input class="input-xlarge span4" type='text' placeholder="e.g. www.hello.com" name="original_url"/>
+              </div>
+              <div>
+                <input type='Submit' class='btn btn-primary span4'/>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="push"></div>
+  </div>
+</div>
+<%= erb :footer %>
