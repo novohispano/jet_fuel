@@ -1,4 +1,4 @@
-jet_fuel
+Jet Fuel
 ========
 
-Link shortener tool developed at gSchool
+A link shortener tool developed at gSchool.
