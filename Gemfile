@@ -5,6 +5,7 @@ gem 'shotgun'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'rake'
+gem 'safe_attributes'
 
 group :development do
   gem 'simplecov'

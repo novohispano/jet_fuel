@@ -3,4 +3,6 @@ class Url < ActiveRecord::Base
            :shortened,
             presence: true,
             uniqueness: true
+
+  has_many :users
 end
