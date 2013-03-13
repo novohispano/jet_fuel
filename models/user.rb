@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validate :email, presence: true, uniqueness: true
-  validate :password_hash, presence: true
-  validate :password_salt, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :password_hash, presence: true
+  validates :password_salt, presence: true
 end

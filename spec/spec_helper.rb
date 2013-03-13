@@ -5,17 +5,18 @@ SimpleCov.start do
   add_filter "/db/"
 end
 
-require 'traffic_spy'
+require './server'
+require 'rack/test'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
-  config.around :each do |example|
-    DB.transaction do
+  config.around do |example|
+    ActiveRecord::Base.transaction do
       example.run
-      raise(Sequel::Rollback)
+      raise ActiveRecord::Rollback
     end
   end
 

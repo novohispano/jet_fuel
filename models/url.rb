@@ -1,8 +1,6 @@
 class Url < ActiveRecord::Base
-  validate :original,
-           :shortened,
-            presence: true,
-            uniqueness: true
+  validates :original, presence: true, uniqueness: true
+  validates :shortened, presence: true
 
   has_many :users
 end
