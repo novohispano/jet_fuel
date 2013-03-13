@@ -29,6 +29,30 @@
       <div>
         <p class="muted credit">Are you a Jet Fuel power user?<br />Create an account <a href="/register">here</a> or login <a href="/login">here</a>.</p>
       </div>
+      <div style="padding-top: 20px;">
+        <h4>Our most popular links.</h4>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Original.</th>
+              <th scope="col">Shortened.</th>
+              <th scope="col">Requests.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% position = 0 %>
+            <% @urls.each do |url, count| %>
+            <tr>
+              <td scope="col"><%= position += 1 %></td>
+              <td scope="col"><%= url.original%></td>
+              <td scope="col"><a href="/<%= url.shortened %>">http://jetfuel.com/<%= url.shortened %></a>
+              <td scope="col"><%= count %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div id="push"></div>
   </div>

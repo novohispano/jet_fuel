@@ -14,6 +14,7 @@ class Server < Sinatra::Base
   set :database, ENV['DATABASE_URL']
 
   get "/" do
+    @urls = Url.all
     erb :index
   end
 
@@ -38,15 +39,19 @@ class Server < Sinatra::Base
     clear_password = params[:password]
     email          = params[:email]
 
-    if User.exists?(email: email)
-      erb :user_error
-    else
-      salt = (0..8).collect{ (65 + rand(26)).chr }.join.downcase
-      password_signer = Digest::HMAC.new(salt, Digest::SHA1)
-      salted_password = password_signer.hexdigest(clear_password)
+    if email != ""
+      if User.exists?(email: email)
+        erb :user_error
+      else
+        salt = (0..8).collect{ (65 + rand(26)).chr }.join.downcase
+        password_signer = Digest::HMAC.new(salt, Digest::SHA1)
+        salted_password = password_signer.hexdigest(clear_password)
 
-      @user = User.create(email: email, password_hash: salted_password, password_salt: salt)
-      erb :user_success
+        @user = User.create(email: email, password_hash: salted_password, password_salt: salt)
+        erb :user_success
+      end
+    else
+      "You didn't give us a username"
     end
   end
 
