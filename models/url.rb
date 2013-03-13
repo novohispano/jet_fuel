@@ -3,4 +3,5 @@ class Url < ActiveRecord::Base
   validates :shortened, presence: true
 
   has_many :users
+  has_many :requests
 end

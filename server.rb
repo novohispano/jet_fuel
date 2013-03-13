@@ -5,6 +5,7 @@ require 'json'
 
 require './models/url'
 require './models/user'
+require './models/request'
 
 ENV['DATABASE_URL'] ||= "sqlite3:///database.sqlite"
 
@@ -85,6 +86,8 @@ class Server < Sinatra::Base
     requested_shortened_url = params[:splat].first
     @url = Url.where(shortened: requested_shortened_url).first
     if @url
+      value = params
+      @url.requests.create(value: value)
       redirect to "http://#{@url.original}"
     else
       erb :url_error
