@@ -29,6 +29,30 @@
           </form>
         </div>
       </div>
+      <div style="padding-top: 20px;">
+        <h4>Your most recent links.</h4>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Original.</th>
+              <th scope="col">Shortened.</th>
+              <th scope="col">Created.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% position = 0 %>
+            <% @urls.sort_by{ |url| url.created_at }.reverse.each do |url| %>
+            <tr>
+              <td scope="col"><%= position += 1 %></td>
+              <td scope="col"><%= url.original%></td>
+              <td scope="col"><a href="/dashboard/<%= @user.email %>/<%= url.shortened %>">http://jetfuel.com/<%= url.shortened %></a>
+              <td scope="col"><%= url.created_at %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div id="push"></div>
   </div>
