@@ -1,10 +1,14 @@
 source "https://rubygems.org"
 
-gem 'sinatra'
-gem 'shotgun'
-gem 'sinatra-activerecord'
-gem 'sqlite3'
-gem 'rake'
+group :production do
+  gem 'sinatra'
+  gem 'shotgun'
+  gem 'sinatra-activerecord'
+  gem 'rake'
+  gem 'thin'
+  gem 'pg'
+end
+
 
 group :development do
   gem 'simplecov'
@@ -17,4 +21,5 @@ group :development do
   gem 'cane'
   gem 'rack-test'
   gem 'reek'
+  gem 'sqlite3'
 end
