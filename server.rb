@@ -85,7 +85,8 @@ class Server < Sinatra::Base
 
   get '/dashboard/:email' do |email|
     username = params[:email]
-    @user     = User.find_by_email(username)
+    @user    = User.find_by_email(username)
+    @urls    = @user.user_urls
     erb :dashboard
   end
 
@@ -93,11 +94,15 @@ class Server < Sinatra::Base
     username     = params[:email]
     original_url = params[:url]
     vanity_url   = params[:vanity_url]
-    
-    @user      = User.find_by_email(username)
-    @user_url  = @user.user_urls.create(original: original_url, shortened: vanity_url)
+    @user        = User.find_by_email(username)
 
-    erb :user_url_success
+    if @user.user_urls.exists?(shortened: vanity_url)
+      erb :user_url_error_vanity
+    else
+      @user_url = @user.user_urls.create(original: original_url, 
+                                         shortened: vanity_url)
+      erb :user_url_success
+    end
   end
 
   get '/dashboard/:email/:shortened_url' do |email, shortened_url|
