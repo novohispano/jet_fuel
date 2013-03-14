@@ -61,8 +61,6 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.1.1)
       sexp_processor (~> 4.1)
-    safe_attributes (1.0.10)
-      activerecord (>= 3.0.0)
     sexp_processor (4.1.5)
     shotgun (0.9)
       rack (>= 1.0)
@@ -96,7 +94,6 @@ DEPENDENCIES
   rb-fsevent
   reek
   rspec
-  safe_attributes
   shotgun
   simplecov
   sinatra
