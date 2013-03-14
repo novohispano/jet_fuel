@@ -4,11 +4,9 @@ gem 'sinatra'
 gem 'shotgun'
 gem 'sinatra-activerecord'
 gem 'rake'
+gem 'thin'
+gem 'pg'
 
-group :production do
-  gem 'thin'
-  gem 'pg'
-end
 
 group :development do
   gem 'simplecov'
