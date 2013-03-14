@@ -76,10 +76,10 @@ class Server < Sinatra::Base
       if salted_password == resulting_password
         redirect to ("dashboard/#{@user.email}")
       else
-        "Your password is incorrect"
+        erb :user_error_login_password
       end
     else
-      "Your username doesn't exist"
+      erb :user_error_login_username
     end
   end
 

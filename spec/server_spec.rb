@@ -60,12 +60,12 @@ describe "Server" do
     it "doesn't log the user when password is invalid" do
       post '/register', { email: "test@test.com", password: "test" }
       post '/login', { email: "test@test.com", password: "testtest" }
-      expect(last_response.body).to eq "Your password is incorrect"
+      expect(last_response.body).to include "Sorry, your password is incorrect"
     end
 
     it "doesn't log the user when username doesn't exist" do
       post '/login', { email: "test@test.com", password: "test" }
-      expect(last_response.body).to eq "Your username doesn't exist"
+      expect(last_response.body).to include "Sorry, that username doesn't exist"
     end
   end
 
