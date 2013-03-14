@@ -17,11 +17,7 @@ class Server < Sinatra::Base
 
   get "/" do
     @urls = Url.all
-    if @urls.inspect == "[#]"
-      @urls = []
-    end
     erb :index
-    #@urls.inspect
   end
 
   post "/" do
