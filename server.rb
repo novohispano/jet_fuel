@@ -19,7 +19,7 @@ class Server < Sinatra::Base
     @urls = []
     begin
       temp_urls = Url.all
-      @urls = temp_urls.dup
+      @urls = temp_urls + []
     rescue
       @urls = []
     end
