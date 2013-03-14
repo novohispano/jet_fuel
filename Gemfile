@@ -1,10 +1,11 @@
 source "https://rubygems.org"
 
+gem 'sinatra'
+gem 'shotgun'
+gem 'sinatra-activerecord'
+gem 'rake'
+
 group :production do
-  gem 'sinatra'
-  gem 'shotgun'
-  gem 'sinatra-activerecord'
-  gem 'rake'
   gem 'thin'
   gem 'pg'
 end
