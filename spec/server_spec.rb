@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "traffic_spy" do
+describe "Server" do
   include Rack::Test::Methods
 
   def app
@@ -54,7 +54,7 @@ describe "traffic_spy" do
     it "logs in the user" do
       post '/register', { email: "test@test.com", password: "test" }
       post '/login', { email: "test@test.com", password: "test" }
-      expect(last_response.body).to eq "Success"
+      expect(last_response.redirect("dashboard/test@test.com"))
     end
 
     it "doesn't log the user when password is invalid" do

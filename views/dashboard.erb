@@ -1,0 +1,36 @@
+<div id="wrap">
+  <div class="container">
+    <div class="row" style="padding: 40px 40px 40px 135px;">
+      <div>
+        <div>
+          <h1 style="padding-bottom: 10px;">Dashboard.</h1>
+        </div>
+        <div>
+          <p class="lead">
+            Welcome to your dashboard. <br />You will be able to see your Jet Fuel information here..
+          </p>
+        </div>
+        <div>
+          <p>Shorten a link here.</p>
+        </div>
+        <div>
+          <form action='/dashboard/<%= @user.email %>' method='post'>
+            <fieldset>
+              <div>
+                <input class="input-xlarge span4" type='text' placeholder="e.g. www.hello.com" name="url"/>
+              </div>
+              <div>
+                <input class="input-xlarge span4" type='text' placeholder="vanity url" name="vanity_url"/>
+              </div>
+              <div>
+                <input type='Submit' class='btn btn-primary span4'/>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="push"></div>
+  </div>
+</div>
+<%= erb :footer %>

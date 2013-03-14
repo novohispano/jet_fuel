@@ -6,6 +6,7 @@ require 'json'
 require './models/url'
 require './models/user'
 require './models/request'
+require './models/user_url'
 
 ENV['DATABASE_URL'] ||= "sqlite3:///database.sqlite"
 
@@ -73,7 +74,7 @@ class Server < Sinatra::Base
       resulting_password = password_verifier.hexdigest(clear_password)
 
       if salted_password == resulting_password
-        "Success"
+        redirect to ("dashboard/#{@user.email}")
       else
         "Your password is incorrect"
       end
@@ -82,9 +83,42 @@ class Server < Sinatra::Base
     end
   end
 
+  get '/dashboard/:email' do |email|
+    username = params[:email]
+    @user     = User.find_by_email(username)
+    erb :dashboard
+  end
+
+  post '/dashboard/:email' do |email|
+    username     = params[:email]
+    original_url = params[:url]
+    vanity_url   = params[:vanity_url]
+    
+    @user      = User.find_by_email(username)
+    @user_url  = @user.user_urls.create(original: original_url, shortened: vanity_url)
+
+    erb :user_url_success
+  end
+
+  get '/dashboard/:email/:shortened_url' do |email, shortened_url|
+    username   = params[:email]
+    vanity_url = params[:shortened_url]
+
+    @user = User.find_by_email(username)
+    @url  = @user.user_urls.where(shortened: vanity_url).first
+
+    if @url
+      value = params
+      @url.requests.create(value: value)
+      redirect to "http://#{@url.original}"
+    else
+      erb :url_error
+    end
+  end
+
   get '/*' do
-    requested_shortened_url = params[:splat].first
-    @url = Url.where(shortened: requested_shortened_url).first
+    shortened_url = params[:splat].first
+    @url          = Url.where(shortened: shortened_url).first
     if @url
       value = params
       @url.requests.create(value: value)
