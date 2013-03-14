@@ -16,11 +16,8 @@ class Server < Sinatra::Base
   set :database, ENV['DATABASE_URL']
 
   get "/" do
-    @urls = []
-    begin
-      temp_urls = Url.all
-      @urls = temp_urls + []
-    rescue
+    @urls = Url.all
+    if @urls == nil
       @urls = []
     end
     erb :index
