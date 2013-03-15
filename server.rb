@@ -89,8 +89,10 @@ class Server < Sinatra::Base
     erb :dashboard
   end
 
-  post '/dashboard/:email' do |email, url, vanity_url|
-    @user = User.find_by_email(email)
+  post '/dashboard/:email' do |email|
+    url        = params[:url]
+    vanity_url = params[:vanity_url]
+    @user      = User.find_by_email(email)
 
     if @user.user_urls.exists?(shortened: vanity_url)
       erb :user_url_error_vanity
