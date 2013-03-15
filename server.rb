@@ -84,33 +84,25 @@ class Server < Sinatra::Base
   end
 
   get '/dashboard/:email' do |email|
-    username = params[:email]
-    @user    = User.find_by_email(username)
-    @urls    = @user.user_urls
+    @user = User.find_by_email(email)
+    @urls = @user.user_urls
     erb :dashboard
   end
 
-  post '/dashboard/:email' do |email|
-    username     = params[:email]
-    original_url = params[:url]
-    vanity_url   = params[:vanity_url]
-    @user        = User.find_by_email(username)
+  post '/dashboard/:email' do |email, url, vanity_url|
+    @user = User.find_by_email(email)
 
     if @user.user_urls.exists?(shortened: vanity_url)
       erb :user_url_error_vanity
     else
-      @user_url = @user.user_urls.create(original: original_url, 
-                                         shortened: vanity_url)
+      @user_url = @user.user_urls.create(original: url, shortened: vanity_url)
       erb :user_url_success
     end
   end
 
   get '/dashboard/:email/:shortened_url' do |email, shortened_url|
-    username   = params[:email]
-    vanity_url = params[:shortened_url]
-
-    @user = User.find_by_email(username)
-    @url  = @user.user_urls.where(shortened: vanity_url).first
+    @user = User.find_by_email(email)
+    @url  = @user.user_urls.where(shortened: shortened_url).first
 
     if @url
       value = params
@@ -121,9 +113,9 @@ class Server < Sinatra::Base
     end
   end
 
-  get '/*' do
-    shortened_url = params[:splat].first
-    @url          = Url.where(shortened: shortened_url).first
+  get '/:shortened_url' do |shortened_url|
+    @url = Url.where(shortened: shortened_url).first
+
     if @url
       value = params
       @url.requests.create(value: value)
