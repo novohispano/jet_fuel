@@ -7,6 +7,8 @@ require './models/url'
 require './models/user'
 require './models/request'
 require './models/user_url'
+require './controller'
+require './encryptor'
 
 ENV['DATABASE_URL'] ||= "sqlite3:///database.sqlite"
 
@@ -21,16 +23,7 @@ class Server < Sinatra::Base
   end
 
   post "/" do
-    original_url = params[:url]
-
-    if Url.exists?(original: original_url)
-      @url = Url.where(original: original_url).first
-      erb :url_success
-    else
-      random_url = (0..8).collect{ (65 + rand(26)).chr }.join.downcase
-      @url = Url.create(original: original_url, shortened: random_url)
-      erb :url_success
-    end
+    Controller.url_shortener(params[:url])
   end
 
   get "/register" do
@@ -38,23 +31,7 @@ class Server < Sinatra::Base
   end
 
   post "/register" do
-    clear_password = params[:password]
-    email          = params[:email]
-
-    if email != ""
-      if User.exists?(email: email)
-        erb :user_error
-      else
-        salt = (0..8).collect{ (65 + rand(26)).chr }.join.downcase
-        password_signer = Digest::HMAC.new(salt, Digest::SHA1)
-        salted_password = password_signer.hexdigest(clear_password)
-
-        @user = User.create(email: email, password_hash: salted_password, password_salt: salt)
-        erb :user_success
-      end
-    else
-      "You didn't give us a username"
-    end
+    Controller.register(params[:password], params[:email])
   end
 
   get "/login" do
